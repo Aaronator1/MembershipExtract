@@ -1,17 +1,30 @@
 __author__ = 'aaronmsmith'
 
-from xml.dom import minidom
+import fileinput
+import time
 
 
-Test_file = open('/Users/aaronmsmith/projects/membershipextract/TinyEligibility.xml','r')
-xmldoc = minidom.parse(Test_file)
-
-Test_file.close()
+fileToSearch = '21037-Eligibility-4-1-2015 - Copy.xml'
 
 
-def printNode(node):
-  print node
-  for child in node.childNodes:
-       printNode(child)
+# header='<?xml version="1.0" encoding="utf-8"?><ArrayOfEligibility>'
+# footer='</ArrayOfEligibility>'
+# r=open(fileToSearch,'r+')
+# contents=r.read()
+# newcontents=str(header + contents + footer)
+# print(newcontents)
+# r.seek(0)
+#
+# r.write(newcontents)
+# r.close()
+#
+# time.sleep(1) #pause for 1 second
 
-printNode(xmldoc.documentElement)
+textToSearch='xsi:nil="true" '
+textToReplace=""
+f= fileinput.FileInput(fileToSearch, inplace=True, backup='.bak')
+
+for line in f:
+    print(line.replace(textToSearch, textToReplace))
+
+f.close()
